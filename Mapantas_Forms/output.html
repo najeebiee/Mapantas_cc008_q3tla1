@@ -5,160 +5,231 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
   <style>
+    /* --- Basic Reset & Theming --- */
+    * {
+        box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
+      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
       margin: 0;
       padding: 40px;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #4a5568;
     }
 
+    /* --- Profile Card Container --- */
     .profile-card {
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px;
       overflow: hidden;
+      text-align: center;
+      position: relative;
+      max-height: 90vh; /* Added max-height */
+      overflow-y: auto; /* Added for scrolling */
     }
 
+    /* --- Custom Scrollbar for the card --- */
+    .profile-card::-webkit-scrollbar {
+        width: 8px;
+    }
+    .profile-card::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    .profile-card::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+    .profile-card::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+    }
+
+
+    /* --- Card Header --- */
     .profile-header {
-      display: flex;
-      align-items: center;
-      padding: 30px;
-      border-bottom: 1px solid #eee;
+      background-color: #5b21b6;
+      height: 150px;
+      position: relative;
     }
 
-    .profile-header img {
-      width: 120px;
-      height: 120px;
-      border-radius: 10px;
+    .profile-pic-container {
+        position: absolute;
+        bottom: -60px; /* Pulls the image down to overlap */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        overflow: hidden;
+        background: #fff;
+    }
+
+    #profile-pic {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      margin-right: 25px;
     }
 
-    .profile-info h2 {
-      margin: 0;
-      font-size: 1.6em;
+    /* --- User Info Section --- */
+    .profile-info {
+        padding: 80px 30px 30px 30px; /* Top padding to make space for the photo */
     }
 
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid #eee;
+    #fullname {
+        margin: 0 0 10px 0;
+        font-size: 1.8em;
+        font-weight: 700;
+        color: #1a202c;
     }
 
-    .tabs button {
-      background: none;
-      border: none;
-      padding: 15px 25px;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      color: #777;
-      border-bottom: 3px solid transparent;
-      transition: all 0.2s;
+    .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 15px;
+        flex-wrap: wrap;
     }
 
-    .tabs button.active {
-      color: #333;
-      border-bottom-color: #5b21b6;
+    .contact-info p {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95em;
+        color: #718096;
+    }
+    
+    .contact-info svg {
+        width: 16px;
+        height: 16px;
     }
 
+    /* --- Content Sections --- */
     .profile-content {
-      display: flex;
-      padding: 30px;
-      gap: 30px;
-    }
-
-    .profile-section {
-      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 30px 30px 30px;
+      text-align: left;
+      border-top: 1px solid #e2e8f0;
+      margin-top: 30px;
+      padding-top: 30px;
     }
 
     .profile-section h3 {
-      font-size: 0.9em;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      font-size: 1.2em;
+      color: #5b21b6;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
     }
 
     .profile-section p {
-      font-size: 1em;
-      color: #444;
-      margin-bottom: 15px;
-      line-height: 1.6;
+      margin: 0 0 12px 0;
+    }
+    
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 20px; /* row-gap and column-gap */
+    }
+
+    .details-grid p {
+        margin: 0;
     }
 
     .profile-section strong {
       display: inline-block;
-      width: 130px;
-      color: #666;
-      font-weight: 600;
+      width: 110px;
+      color: #2d3748;
+    }
+    
+    /* --- Back Button --- */
+    .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 25px;
+        background-color: #5b21b6;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
     }
 
-    /* Responsive Design */
+    .back-button:hover {
+        background-color: #4c1d95;
+        transform: translateY(-2px);
+    }
+    
+    /* --- Responsive Design --- */
     @media (max-width: 768px) {
-      body {
-        padding: 20px;
-      }
-      .profile-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .profile-header img {
-        margin-bottom: 20px;
-      }
-      .profile-content {
-        flex-direction: column;
-      }
+        body { padding: 20px; }
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+        #fullname { font-size: 1.5em; }
     }
   </style>
 </head>
 <body>
 
   <div class="profile-card">
-    <!-- Header -->
+    <!-- Header with Profile Picture -->
     <div class="profile-header">
-      <img id="profile-pic" src="https://placehold.co/120x120/EFEFEF/333333?text=Photo" alt="User Photo">
-      <div class="profile-info">
-        <h2 id="fullname"></h2>
+      <div class="profile-pic-container">
+        <img id="profile-pic" src="https://placehold.co/120x120/EFEFEF/333333?text=Photo" alt="User Photo">
       </div>
     </div>
 
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="active">About</button>
-      <button>Timeline</button>
+    <!-- Main Info -->
+    <div class="profile-info">
+      <h2 id="fullname">User Name</h2>
+      <div class="contact-info">
+        <p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span id="email">N/A</span>
+        </p>
+         <p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span id="contact">N/A</span>
+        </p>
+      </div>
     </div>
 
-    <!-- Content -->
+    <!-- Content Section -->
     <div class="profile-content">
       <div class="profile-section">
-        <h3>Personal Information</h3>
-        <p><strong>First Name:</strong> <span id="fname"></span></p>
-        <p><strong>Middle Name:</strong> <span id="mname"></span></p>
-        <p><strong>Last Name:</strong> <span id="lname"></span></p>
-        <p><strong>Birthday:</strong> <span id="birthdate"></span></p>
-        <p><strong>Birthplace:</strong> <span id="birthloc"></span></p>
-        <p><strong>Gender:</strong> <span id="gender"></span></p>
-        <p><strong>Civil Status:</strong> <span id="civilstat"></span></p>
-        <p><strong>Nationality:</strong> <span id="nationality"></span></p>
-        <p><strong>Religion:</strong> <span id="religion"></span></p>
-      </div>
-
-      <div class="profile-section">
-        <h3>Credentials</h3>
-        <p><strong>Username:</strong> <span id="username"></span></p>
-        <p><strong>Contact Number:</strong> <span id="contact"></span></p>
-        <p><strong>Email Address:</strong> <span id="email"></span></p>
+        <h3>All Details</h3>
+        <div class="details-grid">
+            <p><strong>First Name:</strong> <span id="fname"></span></p>
+            <p><strong>Middle Name:</strong> <span id="mname"></span></p>
+            <p><strong>Last Name:</strong> <span id="lname"></span></p>
+            <p><strong>Birthday:</strong> <span id="birthdate"></span></p>
+            <p><strong>Birthplace:</strong> <span id="birthloc"></span></p>
+            <p><strong>Gender:</strong> <span id="gender"></span></p>
+            <p><strong>Civil Status:</strong> <span id="civilstat"></span></p>
+            <p><strong>Nationality:</strong> <span id="nationality"></span></p>
+            <p><strong>Religion:</strong> <span id="religion"></span></p>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+        </div>
       </div>
     </div>
+    
+    <a href="form.html" class="back-button">Go Back</a>
+    <br><br>
+
   </div>
 
   <script src="validate.js"></script>
-
 </body>
 </html>
 
