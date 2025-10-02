@@ -1,161 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration Form</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* --- Confirmation Modal Styles --- */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeInModal 0.3s ease;
+      }
+
+      @keyframes fadeInModal {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        color: #333;
+        transform: scale(0.95);
+        animation: zoomInModal 0.3s ease forwards;
+      }
+
+      @keyframes zoomInModal {
+        from {
+          transform: scale(0.95);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .modal-content h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #5b21b6;
+      }
+
+      .modal-content p {
+        margin-bottom: 25px;
+      }
+
+      .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .modal-btn {
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .modal-btn.confirm {
+        background-color: #5b21b6;
+        color: #fff;
+      }
+
+      .modal-btn.confirm:hover {
+        background-color: #4c1d95;
+        transform: translateY(-2px);
+      }
+
+      .modal-btn.cancel {
+        background-color: #e5e7eb;
+        color: #374151;
+      }
+
+      .modal-btn.cancel:hover {
+        background-color: #d1d5db;
+      }
+    </style>
+  </head>
+  <body>
     <form id="registrationForm" novalidate>
-        <div class="form-container">
-            <div class="form-column">
-                <fieldset>
-                    <legend>Personal Information</legend>
+      <div class="form-container">
+        <div class="form-column">
+          <fieldset>
+            <legend>Personal Information</legend>
 
-                    <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" name="fname" id="fname" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mname">Middle Name</label>
-                        <input type="text" name="mname" id="mname">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" name="lname" id="lname" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="photo">Photo</label>
-                        <input type="file" name="photo" id="photo" accept="image/*">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="birthdate">Date of Birth</label>
-                        <input type="date" name="birthdate" id="birthdate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="birthloc">Place of Birth</label>
-                        <input type="text" name="birthloc" id="birthloc">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Gender</label>
-                        <div class="radio-group">
-                            <input type="radio" name="gender" id="male" value="Male"><label for="male">Male</label>
-                            <input type="radio" name="gender" id="female" value="Female"><label for="female">Female</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Civil Status</label>
-                         <div class="radio-group">
-                            <input type="radio" name="civilstat" id="single" value="Single"><label for="single">Single</label>
-                            <input type="radio" name="civilstat" id="married" value="Married"><label for="married">Married</label>
-                            <input type="radio" name="civilstat" id="widowed" value="Widowed"><label for="widowed">Widowed</label>
-                        </div>
-                    </div>
-
-                     <div class="form-group">
-                        <label for="nationality">Nationality</label>
-                        <input type="text" name="nationality" id="nationality">
-                    </div>
-
-                     <div class="form-group">
-                        <label for="religion">Religion</label>
-                        <input type="text" name="religion" id="religion">
-                    </div>
-                </fieldset>
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" name="fname" id="fname" required />
             </div>
 
-            <div class="form-column">
-                <fieldset>
-                    <legend>Credentials</legend>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" name="username" id="username" required>
-                    </div>
-
-                     <div class="form-group">
-                        <label for="contact">Contact Number</label>
-                        <input type="tel" name="contact" id="contact" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" name="email" id="email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
-                        <input type="password" name="confirm" id="confirm" required>
-                    </div>
-                </fieldset>
-
-                 <div class="errormessages" id="errormessage"></div>
-                <button type="submit" class="submit-button">Create Account</button>
+            <div class="form-group">
+              <label for="mname">Middle Name</label>
+              <input type="text" name="mname" id="mname" required />
             </div>
+
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" name="lname" id="lname" required />
+            </div>
+
+            <div class="form-group">
+              <label for="photo">Photo</label>
+              <input
+                type="file"
+                name="photo"
+                id="photo"
+                accept="image/*"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="birthdate">Date of Birth</label>
+              <input type="date" name="birthdate" id="birthdate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="birthloc">Birthplace</label>
+              <input type="text" name="birthloc" id="birthloc" required />
+            </div>
+
+            <div class="form-group">
+              <label>Gender</label>
+              <div class="radio-group">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="Male"
+                  required
+                />
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female" />
+                <label for="female">Female</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="civilstat">Civil Status</label>
+              <select name="civilstat" id="civilstat" required>
+                <option value="" disabled selected>Select status...</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Widowed">Widowed</option>
+                <option value="Divorced">Divorced</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="nationality">Nationality</label>
+              <input type="text" name="nationality" id="nationality" required />
+            </div>
+
+            <div class="form-group">
+              <label for="religion">Religion</label>
+              <input type="text" name="religion" id="religion" required />
+            </div>
+          </fieldset>
         </div>
-    </form> 
+
+        <div class="form-column">
+          <fieldset>
+            <legend>Credentials</legend>
+            <div class="errormessages"></div>
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" name="username" id="username" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contact">Contact Number</label>
+              <input type="tel" name="contact" id="contact" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" name="email" id="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" required />
+            </div>
+          </fieldset>
+          <button type="submit" class="submit-button">Create Account</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Confirmation Modal HTML -->
+    <div id="confirmationModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Confirm Submission</h2>
+        <p>Are you sure you want to create this account?</p>
+        <div class="modal-buttons">
+          <button type="button" id="cancelBtn" class="modal-btn cancel">
+            Cancel
+          </button>
+          <button type="button" id="confirmBtn" class="modal-btn confirm">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script>
-    document.getElementById("registrationForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Stop the form from submitting the default way
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("registrationForm");
+        const modal = document.getElementById("confirmationModal");
+        const confirmBtn = document.getElementById("confirmBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const errorDiv = document.querySelector(".errormessages");
 
-        // --- Helper function to get radio button value ---
+        // Helper function to get the value of a checked radio button
         const getRadioValue = (name) => {
-            const radio = document.querySelector(`input[name="${name}"]:checked`);
-            return radio ? radio.value : "";
+          const radios = document.getElementsByName(name);
+          for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+              return radios[i].value;
+            }
+          }
+          return ""; // Return empty string if none are selected
         };
 
-        // --- Save all text and date values to localStorage ---
-        localStorage.setItem("fname", document.getElementById("fname").value);
-        localStorage.setItem("mname", document.getElementById("mname").value);
-        localStorage.setItem("lname", document.getElementById("lname").value);
-        localStorage.setItem("birthdate", document.getElementById("birthdate").value);
-        localStorage.setItem("birthloc", document.getElementById("birthloc").value);
-        localStorage.setItem("nationality", document.getElementById("nationality").value);
-        localStorage.setItem("religion", document.getElementById("religion").value);
-        localStorage.setItem("username", document.getElementById("username").value);
-        localStorage.setItem("contact", document.getElementById("contact").value);
-        localStorage.setItem("email", document.getElementById("email").value);
+        // This function contains the logic to process and save form data
+        const processAndSubmit = () => {
+          // --- Save text input values ---
+          localStorage.setItem("fname", document.getElementById("fname").value);
+          localStorage.setItem("mname", document.getElementById("mname").value);
+          localStorage.setItem("lname", document.getElementById("lname").value);
+          localStorage.setItem(
+            "birthdate",
+            document.getElementById("birthdate").value
+          );
+          localStorage.setItem(
+            "birthloc",
+            document.getElementById("birthloc").value
+          );
+          localStorage.setItem(
+            "nationality",
+            document.getElementById("nationality").value
+          );
+          localStorage.setItem(
+            "religion",
+            document.getElementById("religion").value
+          );
+          localStorage.setItem(
+            "username",
+            document.getElementById("username").value
+          );
+          localStorage.setItem(
+            "contact",
+            document.getElementById("contact").value
+          );
+          localStorage.setItem("email", document.getElementById("email").value);
 
-        // --- Save radio button values ---
-        localStorage.setItem("gender", getRadioValue("gender"));
-        localStorage.setItem("civilstat", getRadioValue("civilstat"));
+          // --- Save radio button and select values ---
+          localStorage.setItem("gender", getRadioValue("gender"));
+          localStorage.setItem(
+            "civilstat",
+            document.getElementById("civilstat").value
+          );
 
-        // --- Handle the photo upload ---
-        const photoInput = document.getElementById("photo");
-        const file = photoInput.files[0];
+          // --- Handle the photo upload ---
+          const photoInput = document.getElementById("photo");
+          const file = photoInput.files[0];
 
-        // This function will redirect the user
-        const redirectToOutput = () => {
+          const redirectToOutput = () => {
             window.location.href = "output.html";
-        };
+          };
 
-        if (file) {
+          if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                // When the file is read, save the Base64 string to localStorage
-                localStorage.setItem("profilePic", e.target.result);
-                redirectToOutput(); // Redirect after the image is saved
+            reader.onload = function (e) {
+              localStorage.setItem("profilePic", e.target.result);
+              redirectToOutput();
             };
-            reader.readAsDataURL(file); // Start reading the file
-        } else {
-            // If no photo was selected, remove any old photo and redirect
+            reader.readAsDataURL(file);
+          } else {
             localStorage.removeItem("profilePic");
             redirectToOutput();
-        }
-    });
+          }
+        };
+
+        // When the form is submitted, validate first, then show the modal
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          // Assumes a 'visible' class is used to show/hide errors, as per previous styles
+          errorDiv.classList.remove("visible");
+          errorDiv.textContent = "";
+
+          if (form.checkValidity()) {
+            modal.style.display = "flex";
+          } else {
+            errorDiv.textContent = "Please fill out all required fields.";
+            errorDiv.classList.add("visible");
+
+            // Find and focus the first invalid field for better user experience
+            const firstInvalid = form.querySelector(":invalid");
+            if (firstInvalid) {
+              firstInvalid.focus();
+            }
+          }
+        });
+
+        // When the "Confirm" button is clicked, process the form
+        confirmBtn.addEventListener("click", () => {
+          processAndSubmit();
+        });
+
+        // When the "Cancel" button or overlay is clicked, hide the modal
+        const closeModal = () => {
+          modal.style.display = "none";
+        };
+
+        cancelBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (event) => {
+          // Only close if the overlay itself is clicked, not the content inside
+          if (event.target === modal) {
+            closeModal();
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
